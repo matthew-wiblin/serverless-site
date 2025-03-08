@@ -1,4 +1,63 @@
-img {
-  width: 200px;
-  height: auto;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: lightgray;
+  color: white;
+  text-align: center;
+}
+
+.logo-div {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between logo and text */
+}
+
+.logo {
+  width: 50px;
+}
+
+.header-text {
+  font-size: 18px;
+  color: #000;
+  font-weight: bold;
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+  gap: 20px;
+}
+
+.buttons-div {
+  display: flex;
+  gap: 15px; /* Space between buttons */
+  align-items: center;
+}
+
+button {
+  background: #0060c6; /* Primary blue */
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background: #006fe5; /* Darker blue on hover */
 }

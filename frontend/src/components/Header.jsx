@@ -1,11 +1,18 @@
 import { useAuth } from 'react-oidc-context';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import pawLogo from '/paw-icon.png';
 import './Header.css';
 
 export default function Header() {
   const auth = useAuth();
-  console.log('auth state = ', auth)
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    try {
+      setUsername(auth.user?.profile["cognito:username"]);
+    } catch (error) {console.log(error)}
+  }, [auth]);
 
   const signOutRedirect = () => {
     const clientId = "6q9c36eaqodo1e612mel9rf3ho";
@@ -16,23 +23,24 @@ export default function Header() {
   };
 
   return (
-    <header className="header">
-      <div className="logo">
-        <img src={pawLogo} className="logo-img" alt="Paw Logo" />
-        <p className="logo-text">Pet Matcher</p>
-      </div>
-      <nav className="nav">
-        <Link to="/home">
-          <button className="nav-btn">Home</button>
-        </Link>
-        <Link to="/browse">
-          <button className="nav-btn">Browse</button>
-        </Link>
-        {auth.isAuthenticated ? (
-          <button className="nav-auth-btn" onClick={signOutRedirect}>Logout</button>
-        ) : (
-          <button className="nav-auth-btn" onClick={() => auth.signinRedirect()}>Login</button>
-        )}
+    <header className='header'>
+      <nav>
+        <div className='logo-div'>
+          <Link path='/'><img src={pawLogo} className="logo" alt="Paw Logo" /></Link>
+          <p className="header-text">Pet Matcher</p>
+        </div>
+        <div className='buttons-div'>
+            <Link to='/'><button>Home</button></Link>
+            <Link to='/browse'><button>Browse</button></Link>
+            {auth.isAuthenticated ? (
+              <>
+              <button className='nav-auth-btn' onClick={signOutRedirect}>Logout</button>
+              <p className="header-text">{username}</p>
+              </>
+            ) : (
+              <button className='nav-auth-btn' onClick={() => auth.signinRedirect()}>Login</button>
+            )}
+        </div>
       </nav>
     </header>
   );
