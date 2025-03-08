@@ -5,26 +5,35 @@ import './Header.css';
 
 export default function Header() {
   const auth = useAuth();
+  console.log('auth state = ', auth)
+
+  const signOutRedirect = () => {
+    const clientId = "6q9c36eaqodo1e612mel9rf3ho";
+    const logoutUri = "http://localhost:5173";
+    const cognitoDomain = "https://eu-west-2j2arzdszl.auth.eu-west-2.amazoncognito.com";
+    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+    auth.removeUser();
+  };
 
   return (
     <header className="header">
       <div className="logo">
-        <img src={pawLogo} className="logo"/>
+        <img src={pawLogo} className="logo-img" alt="Paw Logo" />
+        <p className="logo-text">Pet Matcher</p>
       </div>
       <nav className="nav">
-        <span className="welcome-message">
-          {auth.isAuthenticated ? `Logged in as: ${auth.user?.profile.email}` : 'Pet Matcher'}
-        </span>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/browse">Browse</Link></li>
-          {auth.isAuthenticated ? (
-            <li><button onClick={() => auth.signoutRedirect()}>Logout</button></li>
-          ) : (
-            <li><button onClick={() => auth.signinRedirect()}>Login</button></li>
-          )}
-        </ul>
+        <Link to="/home">
+          <button className="nav-btn">Home</button>
+        </Link>
+        <Link to="/browse">
+          <button className="nav-btn">Browse</button>
+        </Link>
+        {auth.isAuthenticated ? (
+          <button className="nav-auth-btn" onClick={signOutRedirect}>Logout</button>
+        ) : (
+          <button className="nav-auth-btn" onClick={() => auth.signinRedirect()}>Login</button>
+        )}
       </nav>
     </header>
-  )
+  );
 }

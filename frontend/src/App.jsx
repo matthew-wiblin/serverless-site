@@ -8,13 +8,6 @@ import Browse from './pages/Browse';
 function App() {
   const auth = useAuth();
 
-  const signOutRedirect = () => {
-    const clientId = "6q9c36eaqodo1e612mel9rf3ho";
-    const logoutUri = "http://localhost:5173";
-    const cognitoDomain = "https://eu-west-2j2arzdszl.auth.eu-west-2.amazoncognito.com";
-    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
-  };
-
   return (
     <>
     <Header/>

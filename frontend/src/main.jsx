@@ -8,11 +8,12 @@ const cognitoAuthConfig = {
   authority: "https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_j2ARZDsZL",
   client_id: "6q9c36eaqodo1e612mel9rf3ho",
   redirect_uri: "http://localhost:5173",
-  post_logout_redirect_uri: "http://localhost:5173",
   response_type: "code",
   scope: "email openid phone",
 };
-  //redirect_uri: "https://d84l1y8p4kdic.cloudfront.net",
+
+// Below is the default cognito route
+// redirect_uri: "https://d84l1y8p4kdic.cloudfront.net",
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
