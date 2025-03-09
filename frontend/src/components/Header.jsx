@@ -9,9 +9,7 @@ export default function Header() {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    try {
-      setUsername(auth.user?.profile["cognito:username"]);
-    } catch (error) {console.log(error)}
+    try {setUsername(auth.user?.profile["cognito:username"]);} catch (error) {console.log(error)}
   }, [auth]);
 
   const signOutRedirect = () => {
@@ -26,7 +24,7 @@ export default function Header() {
     <header className='header'>
       <nav>
         <div className='logo-div'>
-          <Link path='/'><img src={pawLogo} className="logo" alt="Paw Logo" /></Link>
+          <Link to='/'><img src={pawLogo} className="logo" alt="Paw Logo" /></Link>
           <p className="header-text">Pet Matcher</p>
         </div>
         <div className='buttons-div'>

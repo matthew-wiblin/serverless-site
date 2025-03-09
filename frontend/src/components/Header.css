@@ -13,12 +13,13 @@ html, body {
   background-color: lightgray;
   color: white;
   text-align: center;
+  width: 100%;
 }
 
 .logo-div {
   display: flex;
   align-items: center;
-  gap: 10px; /* Space between logo and text */
+  gap: 10px;
 }
 
 .logo {
