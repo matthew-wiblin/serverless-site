@@ -6,7 +6,6 @@ html, body {
 
 .header {
   display: flex;
-  font-family: Arial, Helvetica, sans-serif;
   justify-content: center;
   align-items: center;
   padding: 10px;

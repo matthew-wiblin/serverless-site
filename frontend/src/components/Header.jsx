@@ -9,7 +9,8 @@ export default function Header() {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    try {setUsername(auth.user?.profile["cognito:username"]);} catch (error) {console.log(error)}
+    try {setUsername(auth.user?.profile["cognito:username"]);}
+    catch (error) {console.log(error)}
   }, [auth]);
 
   const signOutRedirect = () => {

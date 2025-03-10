@@ -8,7 +8,7 @@ const cognitoAuthConfig = {
   authority: "https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_j2ARZDsZL",
   client_id: "6q9c36eaqodo1e612mel9rf3ho",
   redirect_uri: "http://localhost:5173",
-  response_type: "code",
+  response_type: "code", // edit this to not include ?code= after logging in ???
   scope: "email openid phone",
 };
 
