@@ -10,8 +10,16 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: hello.hello
     events:
-      - httpApi:
+      - http:
           path: /
           method: get
+          cors: true
+  users:
+    handler: users.users
+    events:
+      - http:
+          path: /users
+          method: get
+          cors: true
