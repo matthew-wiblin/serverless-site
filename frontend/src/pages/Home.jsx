@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { fetchHello } from "../lib/apiHandler";
+import { apiHandler } from "../lib/apiHandler";
 
 export default function Home() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchHello();
+      const data = await apiHandler("hello");
       setMessage(data.message);
     };
 
