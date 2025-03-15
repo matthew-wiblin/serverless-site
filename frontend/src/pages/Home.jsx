@@ -6,7 +6,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await apiHandler("hello");
+      const data = await apiHandler("users");
       setMessage(data.message);
     };
 
