@@ -1,7 +1,11 @@
+import os
 import json
+import boto3
 
+dynamodb = boto3.resource("dynamodb")
+table = dynamodb.Table(os.environ["DYNAMODB_TABLE"])
 
-def users(event, context):
+def create(event, context):
     body = {
         "message": "Users function successfully invoked !",
     }

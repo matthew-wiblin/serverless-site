@@ -46,9 +46,9 @@ functions:
           method: get
           cors: true
   users:
-    handler: users.users
+    handler: create.create
     events:
       - http:
-          path: /users
-          method: get
+          path: /create
+          method: post
           cors: true
