@@ -7,6 +7,21 @@ provider:
   name: aws
   runtime: python3.12
   region: eu-west-2
+  provider:
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'dynamodb:PutItem'
+            - 'dynamodb:Get*'
+            - 'dynamodb:Scan*'
+            - 'dynamodb:UpdateItem'
+            - 'dynamodb:DeleteItem'
+          Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-Table-${sls:stage}
+  environment:
+    DYNAMODB_TABLE: ${self:service}-Table-${sls:stage}
+
 
 resources:
   Resources:
@@ -20,7 +35,7 @@ resources:
         KeySchema:
           - AttributeName: primary_key
             KeyType: HASH
-        TableName: ${self:service}-customerTable-${sls:stage}
+        TableName: ${self:service}-Table-${sls:stage}
 
 functions:
   hello:
