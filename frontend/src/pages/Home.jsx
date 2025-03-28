@@ -17,6 +17,7 @@ export default function Home() {
   const writeToDB = async (method) => {
     const data = await apiHandler("create", method, { data: input })
     setMessage2(data.message)
+    console.log(data)
   }
 
   return (

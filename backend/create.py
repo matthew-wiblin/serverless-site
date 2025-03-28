@@ -1,19 +1,37 @@
 import os
 import json
 import boto3
+import uuid
 
 dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table(os.environ["DYNAMODB_TABLE"])
 
 def create(event, context):
+
+    data = json.loads(event['body'])['data']
+    item = {
+        'primary_key': str(uuid.uuid4()),
+        'data': data
+    }
+
+    table = dynamodb.Table(os.environ["DYNAMODB_TABLE"])
+    error = None
+
+    try:
+        table.put_item(Item=item)
+    except Exception as e:
+        error = str(e)
+
     body = {
         "message": "Users function successfully invoked !",
+        "event": event,
+        "data": data,
+        "error": error
     }
 
     response = {
         "statusCode": 200, 
         "headers": {
-            "Access-Control-Allow-Origin": "*",  # Allow all origins or specify 'http://localhost:5173'
+            "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
             "Access-Control-Allow-Headers": "Content-Type, Authorization",
         },
