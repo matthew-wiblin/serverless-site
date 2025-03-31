@@ -1,13 +1,12 @@
 # "org" ensures this Service is used with the correct Serverless Framework Access Key.
 org: mattheworganisation
 # "service" is the name of this project. This will also be added to your AWS resource names.
-service: pawMatchBackend
+service: petPortalBackend
 
 provider:
   name: aws
   runtime: python3.12
   region: eu-west-2
-  provider:
   iam:
     role:
       statements:
@@ -18,24 +17,53 @@ provider:
             - 'dynamodb:Scan*'
             - 'dynamodb:UpdateItem'
             - 'dynamodb:DeleteItem'
-          Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-Table-${sls:stage}
+          Resource: 
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-Users-${sls:stage}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-Listings-${sls:stage}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-Requests-${sls:stage}
   environment:
-    DYNAMODB_TABLE: ${self:service}-Table-${sls:stage}
+    DYNAMODB_TABLE_USERS: ${self:service}-Users-${sls:stage}
+    DYNAMODB_TABLE_LISTINGS: ${self:service}-Listings-${sls:stage}
+    DYNAMODB_TABLE_REQUESTS: ${self:service}-Requests-${sls:stage}
 
 
 resources:
   Resources:
-    CustomerTable:
+    UsersTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: primary_key
+          - AttributeName: user_id
             AttributeType: S
         BillingMode: PAY_PER_REQUEST
         KeySchema:
-          - AttributeName: primary_key
+          - AttributeName: user_id
             KeyType: HASH
-        TableName: ${self:service}-Table-${sls:stage}
+        TableName: ${self:service}-Users-${sls:stage}
+    
+    ListingsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: listing_id
+            AttributeType: S
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: listing_id
+            KeyType: HASH
+        TableName: ${self:service}-Listings-${sls:stage}
+    
+    RequestsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: request_id
+            AttributeType: S
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: request_id
+            KeyType: HASH
+        TableName: ${self:service}-Requests-${sls:stage}
 
 functions:
   hello:
