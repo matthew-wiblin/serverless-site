@@ -9,11 +9,11 @@ def create(event, context):
 
     data = json.loads(event['body'])['data']
     item = {
-        'primary_key': str(uuid.uuid4()),
+        'user_id': str(uuid.uuid4()),
         'data': data
     }
 
-    table = dynamodb.Table(os.environ["DYNAMODB_TABLE"])
+    table = dynamodb.Table(os.environ["DYNAMODB_TABLE_USERS"])
     error = None
 
     try:
