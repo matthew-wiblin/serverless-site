@@ -67,14 +67,14 @@ resources:
 
 functions:
   hello:
-    handler: hello.hello
+    handler: handlers.hello.hello
     events:
       - http:
           path: /
           method: get
           cors: true
   users:
-    handler: create.create
+    handler: handlers.create.create
     events:
       - http:
           path: /create

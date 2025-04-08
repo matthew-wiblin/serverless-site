@@ -13,7 +13,7 @@ def create(event, context):
         'data': data
     }
 
-    table = dynamodb.Table(os.environ["DYNAMODB_TABLE_USERS"])
+    table = dynamodb.Table(os.environ['DYNAMODB_TABLE_USERS'])
     error = None
 
     try:
@@ -21,11 +21,18 @@ def create(event, context):
     except Exception as e:
         error = str(e)
 
+
+    auth = event['headers']['Authorization']
+    decode = None
+    
+    
     body = {
-        "message": "Users function successfully invoked !",
-        "event": event,
-        "data": data,
-        "error": error
+        'message': "Users function successfully invoked !",
+        'event': event,
+        'data': data,
+        'error': error,
+        'auth': auth,
+        'decode': decode
     }
 
     response = {
@@ -38,3 +45,4 @@ def create(event, context):
         "body": json.dumps(body)}
 
     return response
+
