@@ -20,32 +20,3 @@ function App() {
 }
 
 export default App
-
-
-// if (auth.isLoading) {
-//   return <div>Loading...</div>;
-// }
-
-// if (auth.error) {
-//   return <div>Encountering error... {auth.error.message}</div>;
-// }
-
-
-{/* <div>
-  <a><img src={pawLogo} className="logo"/><h1>Paw Match</h1></a>
-</div>
-<div>
-{auth.isAuthenticated ? (
-  <div>
-    <pre>Hello: {auth.user?.profile.email}</pre>
-    <pre>ID Token: {auth.user?.id_token}</pre>
-    <pre>Access Token: {auth.user?.access_token}</pre>
-    <pre>Refresh Token: {auth.user?.refresh_token}</pre>
-  </div>
-) : (
-  <div> not authenticated </div>
-) }
-<br /><br />
-<button onClick={() => auth.signinRedirect()}>Sign in</button>
-<button onClick={() => signOutRedirect()}>Sign out</button>
-</div> */}
