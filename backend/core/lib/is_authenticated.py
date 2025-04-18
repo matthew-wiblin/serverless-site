@@ -1,8 +1,7 @@
 import json
 import requests
-import jwt
-from jwt.algorithms import RSAAlgorithm
-
+from jose import jwk, jwt
+from jose.utils import base64url_decode
 
 def is_authenticated(token):
     try:
@@ -15,11 +14,11 @@ def is_authenticated(token):
         kid = decode['kid']
         matchingkey = next(key for key in jwks['keys'] if key['kid'] == kid)
 
-        publickey = RSAAlgorithm.from_jwk(json.dumps(matchingkey))
+        key = jwk.construct(matchingkey)
 
         decodedpayload = jwt.decode(
             accesstoken,
-            publickey,
+            key,
             algorithms=['RS256']
         )
 
