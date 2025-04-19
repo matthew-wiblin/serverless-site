@@ -1,25 +1,23 @@
 const API = import.meta.env.VITE_API_URL;
 
-export async function apiHandler(path, method = "GET", body = null, accessToken = null) {
+export async function apiHandler({ path, method, queryParams, body, accessToken }) {
   const url = `${API}${path}`;
   const headers = { "Content-Type": "application/json" };
-
-  if (accessToken) {
-    headers["Authorization"] = `Bearer ${accessToken}`;
-  }
-
   let options = { method, headers };
 
-  if (method === 'GET') {
-    console.log(`GET request to ${url}`)
-  } else if (['POST', 'PUT', 'PATCH'].includes(method)) {
-    if (body !== null) {
-      options.body = JSON.stringify(body);
-    }
-  } else {
-    console.log('method supplied not accounted for')
+  if (!(path && method)) { return `invalid path and method - ${path}, ${method}` }
+
+  if (accessToken) { headers["Authorization"] = `Bearer ${accessToken}`; }
+  if (queryParams && typeof queryParams === 'object') {
+    const query = new URLSearchParams(queryParams).toString();
+    url += `?${query}`;
   }
-  console.log(options)
+  if (['POST', 'PUT', 'PATCH'].includes(method)) {
+    if (body !== null) { options.body = JSON.stringify(body); }
+  }
+
+  console.log(`URL = ${url.split('.com')[1]}`)
+
   try {
     const response = await fetch(`${url}`, options);
     const data = await response.json();
