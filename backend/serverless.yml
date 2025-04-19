@@ -73,10 +73,17 @@ functions:
           path: /
           method: get
           cors: true
-  users:
+  create:
     handler: core.handlers.create.create
     events:
       - http:
           path: /create
           method: post
           cors: true
+
+plugins:
+  - serverless-python-requirements
+ 
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux

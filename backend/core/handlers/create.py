@@ -3,11 +3,7 @@ import json
 import boto3
 import uuid
 
-thing = None
-try:
-    from core.lib.is_authenticated import is_authenticated
-except Exception as e:
-    thing = str(e)
+from core.lib.is_authenticated import is_authenticated
 
 dynamodb = boto3.resource("dynamodb")
 
@@ -28,12 +24,12 @@ def create(event, context):
         error = str(e)
 
     auth = event['headers']['Authorization']
-    decode = thing
+    decode = None
 
-    # try:
-    #     decode = is_authenticated(auth)
-    # except Exception as e:
-    #     decode = str(e)
+    try:
+        decode = is_authenticated(auth)
+    except Exception as e:
+        decode = str(e)
     
 
     body = {
