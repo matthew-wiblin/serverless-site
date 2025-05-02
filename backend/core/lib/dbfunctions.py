@@ -1,13 +1,23 @@
 import os
-import json
 import boto3
+import uuid
 
-def db_connect(tablename):
+
+def dbconnect(name):
     dynamodb = boto3.resource("dynamodb")
+    tablename = 'DYNAMODB_TABLE_' + name
     table = dynamodb.Table(os.environ[f"{tablename}"])
     return table
 
 
-def create(event, context):
-    pass
+def createitem(table, data):
+    table = dbconnect(table)
+
+    id = str(uuid.uuid4())
+
+    item = { 'userid': id } | data
+
+    table.put_item(Item=item)
+
+    return id
 

@@ -33,11 +33,11 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: user_id
+          - AttributeName: userid
             AttributeType: S
         BillingMode: PAY_PER_REQUEST
         KeySchema:
-          - AttributeName: user_id
+          - AttributeName: userid
             KeyType: HASH
         TableName: ${self:service}-Users-${sls:stage}
     
@@ -45,11 +45,11 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: listing_id
+          - AttributeName: listingid
             AttributeType: S
         BillingMode: PAY_PER_REQUEST
         KeySchema:
-          - AttributeName: listing_id
+          - AttributeName: listingid
             KeyType: HASH
         TableName: ${self:service}-Listings-${sls:stage}
     
@@ -57,11 +57,11 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: request_id
+          - AttributeName: requestid
             AttributeType: S
         BillingMode: PAY_PER_REQUEST
         KeySchema:
-          - AttributeName: request_id
+          - AttributeName: requestid
             KeyType: HASH
         TableName: ${self:service}-Requests-${sls:stage}
 
@@ -80,18 +80,18 @@ functions:
           path: /account/{urlpath}
           method: any
           cors: true
-  pet:
-    handler: core.handlers.pethandler.pethandler
+  listings:
+    handler: core.handlers.listingshandler.listingshandler
     events:
       - http:
-          path: /create
+          path: /listings
           method: any
           cors: true
   matcher:
     handler: core.handlers.matcherhandler.matcherhandler
     events:
       - http:
-          path: /create
+          path: /matcher
           method: any
           cors: true
 
