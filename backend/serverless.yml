@@ -66,19 +66,33 @@ resources:
         TableName: ${self:service}-Requests-${sls:stage}
 
 functions:
-  hello:
-    handler: core.handlers.hello.hello
+  api:
+    handler: core.handlers.apihandler.apihandler
     events:
       - http:
           path: /
           method: get
           cors: true
-  create:
-    handler: core.handlers.create.create
+  account:
+    handler: core.handlers.accounthandler.accounthandler
+    events:
+      - http:
+          path: /account/{urlpath}
+          method: any
+          cors: true
+  pet:
+    handler: core.handlers.pethandler.pethandler
     events:
       - http:
           path: /create
-          method: post
+          method: any
+          cors: true
+  matcher:
+    handler: core.handlers.matcherhandler.matcherhandler
+    events:
+      - http:
+          path: /create
+          method: any
           cors: true
 
 plugins:

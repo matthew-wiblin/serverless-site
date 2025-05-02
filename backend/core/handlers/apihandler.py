@@ -1,7 +1,9 @@
 import json
 
 
-def hello(event, context):
+def apihandler(event, context):
+    print('event = ', event)
+
     body = {
         "message": "Go Serverless v4.0! Your function executed successfully!"
     }

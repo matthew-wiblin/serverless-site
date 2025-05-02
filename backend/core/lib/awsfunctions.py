@@ -3,7 +3,7 @@ import requests
 from jose import jwk, jwt
 from jose.utils import base64url_decode
 
-def is_authenticated(token):
+def isauthenticated(token):
     try:
         accesstoken = token.split('Bearer ')[1]
         decode = jwt.get_unverified_header(accesstoken)

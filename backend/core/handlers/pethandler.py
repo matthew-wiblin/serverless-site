@@ -3,11 +3,13 @@ import json
 import boto3
 import uuid
 
-from core.lib.is_authenticated import is_authenticated
+from core.lib.awsfunctions import isauthenticated
 
 dynamodb = boto3.resource("dynamodb")
 
-def create(event, context):
+def pethandler(event, context):
+    print('event = ', event)
+
 
     data = json.loads(event['body'])['data']
     item = {
@@ -27,7 +29,7 @@ def create(event, context):
     decode = None
 
     try:
-        decode = is_authenticated(auth)
+        decode = isauthenticated(auth)
     except Exception as e:
         decode = str(e)
     

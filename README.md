@@ -10,6 +10,5 @@ Frontend:
  - hooks, functions, .js = camelCase
 
 Backend:
- - functions, files, modules = snake_case
  - classes = PascalCase
- - variables = lowercase
+ - variables, functions, files, modules = lowercase
