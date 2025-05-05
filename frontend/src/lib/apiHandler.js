@@ -1,7 +1,7 @@
 const API = import.meta.env.VITE_API_URL;
 
 export async function apiHandler({ path, method, queryParams, body, accessToken }) {
-  const url = `${API}${path}`;
+  var url = `${API}${path}`;
   const headers = { "Content-Type": "application/json" };
   let options = { method, headers };
 

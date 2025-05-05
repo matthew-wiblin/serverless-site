@@ -17,7 +17,7 @@ export default function Home() {
   }, []);
 
   const writeToDB = async () => {
-    const data = await apiHandler({path: '/create', method: 'POST', body: { data: input }, accessToken: auth.user.access_token})
+    const data = await apiHandler({path: '/listings', method: 'POST', body: { data: input }, accessToken: auth.user.access_token})
     setMessage2(data.message)
     console.log(data)
   }
