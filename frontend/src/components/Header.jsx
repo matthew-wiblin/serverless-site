@@ -1,7 +1,6 @@
 import { useAuth } from 'react-oidc-context';
 import { useState, useEffect } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Link } from 'react-router-dom';
+import { Anchor, Group } from '@mantine/core';
 import pawLogo from '/paw-icon.png';
 import './Header.css';
 
@@ -24,26 +23,19 @@ export default function Header() {
 
   return (
     <header className='header'>
-      
+      <Group>
+        <img src={pawLogo} className="logo" alt="Paw Logo" style={{ width: '50px' }}/>
+        <Anchor href='/'>Home</Anchor>
+        <Anchor href='/browse'>Browse</Anchor>
+        {auth.isAuthenticated ? (
+          <>
+          <Anchor onClick={signOutRedirect}>Logout</Anchor>
+          <p className="header-text" style={{ fontSize: 18, color: '#000', fontWeight: 'bold', margin: 0 }}>{username}</p>
+          </>
+        ) : (
+          <Anchor onClick={() => {auth.signinRedirect()}}>Login</Anchor>
+        )}
+      </Group>
     </header>
   );
 }
-
-{/* <nav>
-  <div className='logo-div'>
-    <Link to='/'><img src={pawLogo} className="logo" alt="Paw Logo" /></Link>
-    <p className="header-text">Pet Matcher</p>
-  </div>
-  <div className='buttons-div'>
-      <Link to='/'><button>Home</button></Link>
-      <Link to='/browse'><button>Browse</button></Link>
-      {auth.isAuthenticated ? (
-        <>
-        <button className='nav-auth-btn' onClick={signOutRedirect}>Logout</button>
-        <p className="header-text">{username}</p>
-        </>
-      ) : (
-        <button className='nav-auth-btn' onClick={() => auth.signinRedirect()}>Login</button>
-      )}
-  </div>
-</nav> */}
