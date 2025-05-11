@@ -8,7 +8,7 @@ def listingshandler(event, context):
     print('event = ', event)
 
     body = json.loads(event['body'])
-    x = createitem('USERS', body)
+    x = createitem('USER', body)
 
     auth = event['headers']['Authorization']
     decode = isauthenticated(auth)

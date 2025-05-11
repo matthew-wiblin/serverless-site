@@ -10,7 +10,7 @@ def dbconnect(name):
     return table
 
 
-def createitem(table, data):
+def createitem(table, data): # reference model to check data
     table = dbconnect(table)
 
     id = str(uuid.uuid4())

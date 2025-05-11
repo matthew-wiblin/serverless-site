@@ -22,22 +22,22 @@ provider:
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-Listings-${sls:stage}
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-Requests-${sls:stage}
   environment:
-    DYNAMODB_TABLE_USERS: ${self:service}-Users-${sls:stage}
-    DYNAMODB_TABLE_LISTINGS: ${self:service}-Listings-${sls:stage}
-    DYNAMODB_TABLE_REQUESTS: ${self:service}-Requests-${sls:stage}
+    DYNAMODB_TABLE_USER: ${self:service}-Users-${sls:stage}
+    DYNAMODB_TABLE_LISTING: ${self:service}-Listings-${sls:stage}
+    DYNAMODB_TABLE_REQUEST: ${self:service}-Requests-${sls:stage}
 
 
-resources:
+resources: #specify deletion policies at some point
   Resources:
     UsersTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: userid
+          - AttributeName: id
             AttributeType: S
         BillingMode: PAY_PER_REQUEST
         KeySchema:
-          - AttributeName: userid
+          - AttributeName: id
             KeyType: HASH
         TableName: ${self:service}-Users-${sls:stage}
     
@@ -45,11 +45,11 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: listingid
+          - AttributeName: id
             AttributeType: S
         BillingMode: PAY_PER_REQUEST
         KeySchema:
-          - AttributeName: listingid
+          - AttributeName: id
             KeyType: HASH
         TableName: ${self:service}-Listings-${sls:stage}
     
@@ -57,11 +57,11 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: requestid
+          - AttributeName: id
             AttributeType: S
         BillingMode: PAY_PER_REQUEST
         KeySchema:
-          - AttributeName: requestid
+          - AttributeName: id
             KeyType: HASH
         TableName: ${self:service}-Requests-${sls:stage}
 
