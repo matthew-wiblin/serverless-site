@@ -4,7 +4,7 @@ lookups = {
             'male',
             'female'
         ],
-        'listingsstatus': [
+        'status': [
             'available',
             'onhold',
             'taken',

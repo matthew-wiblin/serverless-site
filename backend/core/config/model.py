@@ -15,10 +15,10 @@ model = {
             {'attributename': 'userid', 'displayname': 'Owner ID', 'type': 'integer'},
             {'attributename': 'imageurl', 'displayname': 'Image URL', 'type': 'string'},
             {'attributename': 'createdat', 'displayname': 'Created At', 'type': 'datetime'},
-            {'attributename': 'listingstatus', 'displayname': 'Listing Status', 'type': 'lookup'},
+            {'attributename': 'listingstatus', 'displayname': 'Listing Status', 'type': 'lookup', 'lookupname': 'status'},
             {'attributename': 'pettype', 'displayname': 'Pet Type', 'type': 'string'},
             {'attributename': 'breed', 'displayname': 'Breed', 'type': 'string'},
-            {'attributename': 'gender', 'displayname': 'Gender', 'type': 'lookup'},
+            {'attributename': 'gender', 'displayname': 'Gender', 'type': 'lookup', 'lookupname': 'gender'},
             {'attributename': 'description', 'displayname': 'Description', 'type': 'string'},
             {'attributename': 'location', 'displayname': 'Location', 'type': 'string'}
         ],
@@ -31,7 +31,8 @@ model = {
             {'attributename': 'ownerid', 'displayname': 'Owner ID', 'type': 'integer'},
             {'attributename': 'requesterid', 'displayname': 'Requester ID', 'type': 'integer'},
             {'attributename': 'message', 'displayname': 'Message', 'type': 'string'},
-            {'attributename': 'requeststatus', 'displayname': 'Request Status', 'type': 'lookup'}
+            {'attributename': 'createdat', 'displayname': 'Created At', 'type': 'datetime'},
+            {'attributename': 'requeststatus', 'displayname': 'Request Status', 'type': 'lookup', 'lookupname': 'status'}
         ],
         'GSIs': []
     },
