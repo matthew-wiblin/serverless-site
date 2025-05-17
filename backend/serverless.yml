@@ -70,7 +70,7 @@ functions:
     handler: core.handlers.apihandler.apihandler
     events:
       - http:
-          path: /
+          path: /api
           method: get
           cors: true
   account:
@@ -84,14 +84,14 @@ functions:
     handler: core.handlers.listingshandler.listingshandler
     events:
       - http:
-          path: /listings
+          path: /listings/{urlpath}
           method: any
           cors: true
   matcher:
     handler: core.handlers.matcherhandler.matcherhandler
     events:
       - http:
-          path: /matcher
+          path: /matcher/{urlpath}
           method: any
           cors: true
 

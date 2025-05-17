@@ -1,15 +1,21 @@
 lookups = {
     'attributename': {
         'gender': [
-            'male',
-            'female'
+            'Male',
+            'Female'
         ],
         'status': [
-            'available',
-            'onhold',
-            'taken',
-            'paused',
-            'cancelled'
+            'Available',
+            'Onhold',
+            'Taken',
+            'Paused',
+            'Cancelled'
+        ]
+    },
+    'forms': {
+        'gender': [
+            'Male',
+            'Female'
         ]
     }
 }

@@ -23,9 +23,9 @@ def isauthenticated(token):
         )
 
         if decodedpayload['token_use'] == 'access':
-            return decodedpayload['username']
+            return True, decodedpayload['username']
         else:
-            return 'error - Wrong token passed to backend'
+            return False, 'error - Wrong token passed to backend'
     except Exception as e:
-        return f"error - {str(e)}"
+        return False, f"error - {str(e)}"
 

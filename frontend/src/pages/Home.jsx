@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await apiHandler({path: '/', method: 'GET'});
+      const data = await apiHandler({path: '/api', method: 'GET'});
       setMessage(data.message);
     };
     fetchData();
