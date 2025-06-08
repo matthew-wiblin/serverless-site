@@ -84,6 +84,10 @@ functions:
     handler: core.handlers.listingshandler.listingshandler
     events:
       - http:
+          path: /listings
+          method: any
+          cors: true
+      - http:
           path: /listings/{urlpath}
           method: any
           cors: true

@@ -12,28 +12,31 @@ def listingshandler(event, context):
 
     body = json.loads(event['body'])
 
-    urlpath = event.get("pathParameters", {}).get("urlpath", "")
+    urlpath = event.get("pathParameters") or {}
 
-    urlpath2 = event['pathParameters']['urlpath']
-
+    try:
+        urlpath2 = event['pathParameters']['urlpath']
+    except:
+        urlpath2 = 'error'
+    
     returnbody = {
         'message': "Users function successfully invoked !",
         'event': event,
         'body': body,
-        'result username': result + ' ' + username,
+        'result username': str(result) + ' ' + username,
         'urlpath': urlpath,
         'urlpath2': urlpath2
     }
 
-    # response = {
-    #     "statusCode": 200, 
-    #     "headers": {
-    #         "Access-Control-Allow-Origin": "*",
-    #         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    #         "Access-Control-Allow-Headers": "Content-Type, Authorization",
-    #     },
-    #     "body": json.dumps(returnbody)}
-    # return response
+    response = {
+        "statusCode": 200, 
+        "headers": {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
+        "body": json.dumps(returnbody)}
+    return response
 
-    return {"statusCode": 200, "headers": {"Access-Control-Allow-Origin": "*"}, "body": json.dumps(returnbody)}
+    # return {"statusCode": 200, "headers": {"Access-Control-Allow-Origin": "*"}, "body": json.dumps(returnbody)}
 
