@@ -1,4 +1,4 @@
-## Pet Portal app
+## Photo collection app
 
 Serverless Proj hosted on AWS
 
