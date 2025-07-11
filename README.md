@@ -8,6 +8,8 @@ Available through a Route-53 DNS name -- "serverlesssite.com"
 Backend deployed in labmdas accessed throguh an API gateway
 Connected to a dynamodb DB
 
+![Architecture Diagram](/frontend/public/diagram-infra.png)
+
 ### naming conventions
 Frontend:
  - components, pages = PascalCase
