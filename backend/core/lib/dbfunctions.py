@@ -21,3 +21,18 @@ def createitem(table, data): # reference model to check data
 
     return id
 
+
+def getitem():
+    pass
+
+
+def getitems():
+    pass
+
+
+def updateitem():
+    pass
+
+
+def deleteitem():
+    pass

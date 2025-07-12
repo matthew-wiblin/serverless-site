@@ -3,17 +3,17 @@ import requests
 from jose import jwk, jwt
 from jose.utils import base64url_decode
 
-def isauthenticated(token):
+def returnauthenticateduser(event):
     try:
+        token = event['headers']['Authorization']
         accesstoken = token.split('Bearer ')[1]
         decode = jwt.get_unverified_header(accesstoken)
 
-        jwks_url = 'https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_j2ARZDsZL/.well-known/jwks.json'
-        jwks = requests.get(jwks_url).json()
+        jwksurl = 'https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_j2ARZDsZL/.well-known/jwks.json'
+        jwks = requests.get(jwksurl).json()
 
         kid = decode['kid']
         matchingkey = next(key for key in jwks['keys'] if key['kid'] == kid)
-
         key = jwk.construct(matchingkey)
 
         decodedpayload = jwt.decode(

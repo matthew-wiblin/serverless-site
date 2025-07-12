@@ -14,9 +14,6 @@ functions = {
         'fields': [
             { 'name': 'photoname', 'label': True, 'type': 'text', 'required': True },
             { 'name': 'photo', 'label': 'Upload Photos', 'type': 'photouploadmulti', 'required': True }
-        ],
-        'buttons': [
-            { 'Text': 'Upload', 'icon': '', 'apicall': ''}
         ]
     }
 }

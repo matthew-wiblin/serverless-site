@@ -18,18 +18,16 @@ provider:
             - 'dynamodb:UpdateItem'
             - 'dynamodb:DeleteItem'
           Resource: 
-            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-Users-${sls:stage}
-            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-Listings-${sls:stage}
-            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-Requests-${sls:stage}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-user-${sls:stage}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-photo-${sls:stage}
   environment:
-    DYNAMODB_TABLE_USER: ${self:service}-Users-${sls:stage}
-    DYNAMODB_TABLE_LISTING: ${self:service}-Listings-${sls:stage}
-    DYNAMODB_TABLE_REQUEST: ${self:service}-Requests-${sls:stage}
+    DYNAMODB_TABLE_USER: ${self:service}-user-${sls:stage}
+    DYNAMODB_TABLE_USER: ${self:service}-photo-${sls:stage}
 
 
 resources: #specify deletion policies at some point
   Resources:
-    UsersTable:
+    UserTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
@@ -39,9 +37,8 @@ resources: #specify deletion policies at some point
         KeySchema:
           - AttributeName: id
             KeyType: HASH
-        TableName: ${self:service}-Users-${sls:stage}
-    
-    ListingsTable:
+        TableName: ${self:service}-user-${sls:stage}
+    PhotoTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
@@ -51,19 +48,7 @@ resources: #specify deletion policies at some point
         KeySchema:
           - AttributeName: id
             KeyType: HASH
-        TableName: ${self:service}-Listings-${sls:stage}
-    
-    RequestsTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        BillingMode: PAY_PER_REQUEST
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        TableName: ${self:service}-Requests-${sls:stage}
+        TableName: ${self:service}-photo-${sls:stage}
 
 functions:
   api:
@@ -71,17 +56,14 @@ functions:
     events:
       - http:
           path: /api
-          method: get
+          method: any
           cors: true
-  account:
-    handler: core.handlers.accounthandler.accounthandler
-    events:
       - http:
-          path: /account/{urlpath}
+          path: /api/{urlpath}
           method: any
           cors: true
   listings:
-    handler: core.handlers.listingshandler.listingshandler
+    handler: core.handlers.viewhandler.viewhandler
     events:
       - http:
           path: /listings
@@ -89,13 +71,6 @@ functions:
           cors: true
       - http:
           path: /listings/{urlpath}
-          method: any
-          cors: true
-  matcher:
-    handler: core.handlers.matcherhandler.matcherhandler
-    events:
-      - http:
-          path: /matcher/{urlpath}
           method: any
           cors: true
 
