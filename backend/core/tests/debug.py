@@ -1,3 +1,6 @@
+import sys
+sys.dont_write_bytecode = True
+
 from core.config.model import model
 from core.config.views import views
 from core.config.function import functions
