@@ -12,17 +12,15 @@ def viewhandler(event, context):
     urllist = geturllist(event)
     method = event.get("httpMethod", None)
 
-    returnview = {}
-
+    view = {}
     if method == 'GET' and urllist[0] == 'view':
         view = views[urllist[1]]
-        returnview['title'] == view['title']
         for key, value in view.items():
-            pass
+            if key == 'title':
+                pass
+            if key == 'components':
+                pass
 
+    print(userresult, username, urllist, method, view)
 
-
-
-    print(userresult, username, urllist, method, returnview)
-
-    return {"statusCode": 200, "headers": {"Access-Control-Allow-Origin": "*"}, "body": json.dumps(returnview)}
+    return {"statusCode": 200, "headers": {"Access-Control-Allow-Origin": "*"}, "body": json.dumps(view)}
