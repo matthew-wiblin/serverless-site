@@ -3,7 +3,7 @@ import requests
 from jose import jwk, jwt
 from jose.utils import base64url_decode
 
-def returnauthenticateduser(event):
+def getauthenticateduser(event):
     try:
         token = event['headers']['Authorization']
         accesstoken = token.split('Bearer ')[1]
@@ -28,4 +28,14 @@ def returnauthenticateduser(event):
             return False, 'error - Wrong token passed to backend'
     except Exception as e:
         return False, f"error - {str(e)}"
+
+
+def geturllist(event):
+    path = event.get("path") or {}
+    urllist = path.split('/')
+    if urllist[0] == '':
+        urllist.pop(0)
+    if urllist[0] == 'dev':
+        urllist.pop(0)
+    return urllist
 

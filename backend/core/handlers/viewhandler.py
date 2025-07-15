@@ -1,24 +1,28 @@
 import json
 
-from core.lib.awsfunctions import returnauthenticateduser
+from core.lib.awsfunctions import getauthenticateduser, geturllist
 from core.lib.dbfunctions import createitem
-
+from core.config.views import views
+from core.config.model import model
 
 def viewhandler(event, context):
     print('event = ', event)
 
-    result, username = returnauthenticateduser(event)
+    userresult, username = getauthenticateduser(event)
+    urllist = geturllist(event)
+    method = event.get("httpMethod", None)
 
-    body = json.loads(event['body'])
+    returnview = {}
 
-    urlpath = event.get("pathParameters") or {}
+    if method == 'GET' and urllist[0] == 'view':
+        view = views[urllist[1]]
+        returnview['title'] == view['title']
+        for key, value in view.items():
+            pass
 
-    returnbody = {
-        'message': "Users function successfully invoked !",
-        'event': event,
-        'body': body,
-        'result username': str(result) + ' ' + username,
-        'urlpath': urlpath
-    }
 
-    return {"statusCode": 200, "headers": {"Access-Control-Allow-Origin": "*"}, "body": json.dumps(returnbody)}
+
+
+    print(userresult, username, urllist, method, returnview)
+
+    return {"statusCode": 200, "headers": {"Access-Control-Allow-Origin": "*"}, "body": json.dumps(returnview)}

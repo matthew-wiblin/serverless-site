@@ -10,14 +10,14 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await apiHandler({path: '/api/', method: 'GET'});
+      const data = await apiHandler({path: '/view', method: 'GET'});
       setMessage(data.message);
     };
     fetchData();
   }, []);
 
   const writeToDB = async () => {
-    const data = await apiHandler({path: '/listings', method: 'POST', body: { data: input }, accessToken: auth.user.access_token})
+    const data = await apiHandler({path: '/', method: 'POST', body: { data: input }, accessToken: auth.user.access_token})
     setMessage2(data.message)
     console.log(data)
   }

@@ -1,7 +1,7 @@
 # "org" ensures this Service is used with the correct Serverless Framework Access Key.
 org: mattheworganisation
 # "service" is the name of this project. This will also be added to your AWS resource names.
-service: petPortalBackend
+service: PhotoAppBackend
 
 provider:
   name: aws
@@ -22,7 +22,7 @@ provider:
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-photo-${sls:stage}
   environment:
     DYNAMODB_TABLE_USER: ${self:service}-user-${sls:stage}
-    DYNAMODB_TABLE_USER: ${self:service}-photo-${sls:stage}
+    DYNAMODB_TABLE_PHOTO: ${self:service}-photo-${sls:stage}
 
 
 resources: #specify deletion policies at some point
@@ -51,7 +51,7 @@ resources: #specify deletion policies at some point
         TableName: ${self:service}-photo-${sls:stage}
 
 functions:
-  api:
+  apihandler:
     handler: core.handlers.apihandler.apihandler
     events:
       - http:
@@ -62,15 +62,15 @@ functions:
           path: /api/{urlpath}
           method: any
           cors: true
-  listings:
+  viewhandler:
     handler: core.handlers.viewhandler.viewhandler
     events:
       - http:
-          path: /listings
+          path: /view
           method: any
           cors: true
       - http:
-          path: /listings/{urlpath}
+          path: /view/{urlpath}
           method: any
           cors: true
 
