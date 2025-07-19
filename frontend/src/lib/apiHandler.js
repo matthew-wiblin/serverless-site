@@ -27,3 +27,6 @@ export async function apiHandler({ path, method, queryParams, body, accessToken 
     console.log('API HTTP error ', error)
   }
 }
+
+// const data = await apiHandler({path: '/view', method: 'GET'});
+// const data = await apiHandler({path: '/', method: 'POST', body: { data: input }, accessToken: auth.user.access_token})

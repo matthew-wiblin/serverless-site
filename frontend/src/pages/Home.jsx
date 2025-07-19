@@ -1,41 +1,24 @@
 import { useAuth } from 'react-oidc-context';
 import { useEffect, useState } from "react";
 import { apiHandler } from "../lib/apiHandler";
+import View from "../components/View.jsx"
 
 export default function Home() {
   const auth = useAuth();
-  const [message, setMessage] = useState("");
-  const [message2, setMessage2] = useState("");
-  const [input, setInput] = useState("");
+  const [homeView, setHomeView] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await apiHandler({path: '/view', method: 'GET'});
-      setMessage(data.message);
+      const data = await apiHandler({path: '/view/home', method: 'GET'});
+      setHomeView(data)
     };
     fetchData();
   }, []);
 
-  const writeToDB = async () => {
-    const data = await apiHandler({path: '/', method: 'POST', body: { data: input }, accessToken: auth.user.access_token})
-    setMessage2(data.message)
-    console.log(data)
-  }
-
   return (
     <div>
-      home
-      <p>{message}</p>
-      <p>{message2}</p>
-      <div>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type something"
-        />
-        <button onClick={() => writeToDB()}>Send to API</button>
-      </div>    
+      <br/>
+      <View viewData={homeView}/> 
     </div>
   );
 }

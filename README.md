@@ -13,7 +13,7 @@ Serverless Proj hosted on AWS
 ### naming conventions
 Frontend:
  - components, pages = PascalCase
- - hooks, functions, .js = camelCase
+ - hooks, variables, functions, .js = camelCase
 
 Backend:
  - classes = PascalCase
