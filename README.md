@@ -10,6 +10,11 @@ Serverless Proj hosted on AWS
 
 ![Architecture Diagram](/frontend/public/diagram-infra.png)
 
+### To Run
+
+ - chmod +x deployfrontend.sh (within frontend directory)
+ - environment variable for frontend deploy stored in .env
+
 ### naming conventions
 Frontend:
  - components, pages = PascalCase
