@@ -1,7 +1,7 @@
 import { useAuth } from 'react-oidc-context';
 import { useState, useEffect } from 'react';
 import { Anchor, Group } from '@mantine/core';
-import pawLogo from '/paw-icon.png';
+import cameraLogo from '/camera-icon.png';
 import './Header.css';
 
 export default function Header() {
@@ -24,7 +24,7 @@ export default function Header() {
   return (
     <header className='header'>
       <Group>
-        <img src={pawLogo} className="logo" alt="Paw Logo" style={{ width: '50px' }}/>
+        <img src={cameraLogo} className="logo" alt="Camera Logo" style={{ width: '50px' }}/>
         <Anchor href='/'>Home</Anchor>
         <Anchor href='/browse'>Browse</Anchor>
         {auth.isAuthenticated ? (
