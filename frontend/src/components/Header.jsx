@@ -1,12 +1,13 @@
 import { useAuth } from 'react-oidc-context';
 import { useState, useEffect } from 'react';
-import { Anchor, Group } from '@mantine/core';
+import { Anchor } from '@mantine/core';
 import cameraLogo from '/camera-icon.png';
 import './Header.css';
 
 export default function Header() {
   const auth = useAuth();
   const [username, setUsername] = useState('');
+  const pathname = window.location.pathname;
 
   useEffect(() => {
     try {setUsername(auth.user?.profile["cognito:username"]);}
@@ -22,20 +23,22 @@ export default function Header() {
   };
 
   return (
-    <header className='header'>
-      <Group>
-        <img src={cameraLogo} className="logo" alt="Camera Logo" style={{ width: '50px' }}/>
-        <Anchor href='/'>Home</Anchor>
-        <Anchor href='/browse'>Browse</Anchor>
+    <header className="header">
+      <img src={cameraLogo} className="logo" alt="Camera Logo" />
+      <div className="tabs-container">
+        <Anchor href="/" className={`header-anchor ${pathname === '/' ? 'active' : ''}`}>Home</Anchor>
+        <Anchor href="/browse" className={`header-anchor ${pathname === '/browse' ? 'active' : ''}`}>Browse</Anchor>
+      </div>
+      <div className="auth-container">
         {auth.isAuthenticated ? (
           <>
-          <Anchor onClick={signOutRedirect}>Logout</Anchor>
-          <p className="header-text" style={{ fontSize: 18, color: '#000', fontWeight: 'bold', margin: 0 }}>{username}</p>
+            <Anchor onClick={signOutRedirect} className="header-anchor">Logout</Anchor>
+            <p className="header-text">{username}</p>
           </>
         ) : (
-          <Anchor onClick={() => {auth.signinRedirect()}}>Login</Anchor>
+          <Anchor onClick={() => auth.signinRedirect()} className="header-anchor">Login</Anchor>
         )}
-      </Group>
+      </div>
     </header>
   );
 }

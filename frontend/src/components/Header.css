@@ -1,16 +1,17 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
+.header {background-color: #f8f9fa;border-bottom: 1px solid #dee2e6;padding: 12px 24px;
+        display: flex;align-items: center;justify-content: space-between;position: relative;}
 
-.header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  background-color: lightgray;
-  color: white;
-  text-align: center;
-  width: 100%;
-}
+.logo {width: 50px;}
+
+.tabs-container {position: absolute;left: 50%;transform: translateX(-50%);display: flex;gap: 24px;z-index: 1;}
+
+.header-anchor {color: #333;text-decoration: none;padding: 8px 12px;font-weight: 500;font-size: 16px;
+                border-bottom: 2px solid transparent;transition: border-color 0.2s, color 0.2s;}
+
+.header-anchor:hover {color: #000;}
+
+.header-anchor.active {border-bottom: 2px solid #228be6;color: #000;}
+
+.auth-container {display: flex;align-items: center;gap: 12px;}
+
+.header-text {font-size: 16px;font-weight: 600;color: #333;top: -20px;text-decoration: underline;}
