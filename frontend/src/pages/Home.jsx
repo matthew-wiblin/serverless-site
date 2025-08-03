@@ -1,10 +1,8 @@
-import { useAuth } from 'react-oidc-context';
 import { useEffect, useState } from "react";
 import { apiHandler } from "../lib/apiHandler";
 import View from "../components/View.jsx"
 
 export default function Home() {
-  const auth = useAuth();
   const [homeView, setHomeView] = useState("");
 
   useEffect(() => {
