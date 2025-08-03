@@ -1,26 +1,15 @@
-import { useAuth } from 'react-oidc-context';
 import { useState, useEffect } from 'react';
 import { Anchor } from '@mantine/core';
 import cameraLogo from '/camera-icon.png';
 import './Header.css';
+import { getCurrentUser, signOut } from 'aws-amplify/auth';
 
 export default function Header() {
-  const auth = useAuth();
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(null)
+
   const pathname = window.location.pathname;
 
-  useEffect(() => {
-    try {setUsername(auth.user?.profile["cognito:username"]);}
-    catch (error) {console.log(error)}
-  }, [auth]);
-
-  const signOutRedirect = () => {
-    const clientId = "6q9c36eaqodo1e612mel9rf3ho";
-    const logoutUri = "http://localhost:5173";
-    const cognitoDomain = "https://eu-west-2j2arzdszl.auth.eu-west-2.amazoncognito.com";
-    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
-    auth.removeUser();
-  };
+  useEffect(() => { getCurrentUser().then(user => setUsername(user.username)).catch(console.error); }, []);
 
   return (
     <header className="header">
@@ -30,13 +19,13 @@ export default function Header() {
         <Anchor href="/browse" className={`header-anchor ${pathname === '/browse' ? 'active' : ''}`}>Browse</Anchor>
       </div>
       <div className="auth-container">
-        {auth.isAuthenticated ? (
+        {username ? (
           <>
-            <Anchor onClick={signOutRedirect} className="header-anchor">Logout</Anchor>
-            <p className="header-text">{username}</p>
+            <Anchor href='/account' className={`header-anchor ${pathname === '/account' ? 'active' : ''}`}>Account - {username}</Anchor>
+            <Anchor onClick={() => { signOut().then(() => window.location.href = '/'); }} className="header-anchor">Sign Out</Anchor>
           </>
         ) : (
-          <Anchor onClick={() => auth.signinRedirect()} className="header-anchor">Login</Anchor>
+          <Anchor href='/login' className={`header-anchor ${pathname === '/login' ? 'active' : ''}`}>Login / Sign Up</Anchor>
         )}
       </div>
     </header>
