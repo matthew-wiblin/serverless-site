@@ -13,5 +13,3 @@
 .header-anchor.active {border-bottom: 2px solid #228be6;color: #000;}
 
 .auth-container {display: flex;align-items: center;gap: 12px;}
-
-.header-text {font-size: 16px;font-weight: 600;color: #333;top: -20px;text-decoration: underline;}
