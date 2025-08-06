@@ -55,7 +55,6 @@ export default function Login() {
                 <Tabs.Tab value="signup">Sign Up</Tabs.Tab>
               </Tabs.List>
             </Tabs>
-
             <Stack>
               {type === 'signup' && (
                 <TextInput
@@ -106,7 +105,6 @@ export default function Login() {
             )}
           </Stack>
         )}
-
       </Paper>
     </Container>
   );
