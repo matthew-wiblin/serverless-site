@@ -1,77 +1,112 @@
 import { useState } from 'react';
-import { signIn, signUp } from 'aws-amplify/auth';
+import { signIn, signUp, confirmSignUp, resendSignUpCode } from 'aws-amplify/auth';
 import '../aws-config';
 import {Container, TextInput, PasswordInput, Button, Paper, Title, Stack, Notification, Tabs} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 
 export default function Login() {
   const [type, setType] = useState('login');
+  const [step, setStep] = useState('form');
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmationCode, setConfirmationCode] = useState('');
   const [error, setError] = useState('');
 
-  const [loading, { toggle }] = useDisclosure();
-
-  const handleAuth = async () => { // seperate out into login function and signup
+  const handleAuth = async () => {
+    setError('')
     try {
-      toggle()
+      setLoading(true)
       if (type === 'login') {
-        await signIn({ username, password });
+        const result = await signIn({ username, password });
+        if (result.isSignedIn === false) {setStep('confirm'); resendSignUpCode({ username: username })}
+        if (result.isSignedIn === true) {window.location.href = '/account'}
       } else {
-        await signUp({ // sign up not working correctly need to add verfication to email
-          username,
-          password,
-          options: { userAttributes: { email } },
-        });
+        const { isSignUpComplete, userId, nextStep } = await signUp({username, password, options: { userAttributes: { email } }});
+        if (nextStep?.signUpStep === 'CONFIRM_SIGN_UP') {setStep('confirm')}
+        else {window.location.href = '/';}
       }
-      window.location.href = '/';
-    } catch (err) {
-      console.error(err);
-      setError(err.message || `${type} failed`);
-    }
-    toggle()
+    } catch (err) {setError(err.message || `${type} failed`)}
+    setLoading(false)
   };
 
-  return ( // centralise the tabs somewhere 
+  const handleConfirm = async () => {
+    setError('');
+    setLoading(true)
+    try {
+      await confirmSignUp({ username, confirmationCode });
+      await signIn({ username, password });
+      window.location.href = '/';
+    } catch (err) {
+      setError(err.message || 'Confirmation failed');
+    }
+    setLoading(false)
+  };
+
+  return (
     <Container size={420} my={40}>
       <Title align="center" mb={20}>Welcome</Title>
       <Paper withBorder shadow="md" p={30} radius="md">
-        <Tabs value={type} onChange={(val) => setType(val)} mb="md">
-          <Tabs.List grow>
-            <Tabs.Tab value="login">Login</Tabs.Tab>
-            <Tabs.Tab value="signup">Sign Up</Tabs.Tab>
-          </Tabs.List>
-        </Tabs>
+        {step === 'form' && (
+          <>
+            <Tabs value={type} onChange={(val) => setType(val)} mb="md">
+              <Tabs.List grow>
+                <Tabs.Tab value="login">Login</Tabs.Tab>
+                <Tabs.Tab value="signup">Sign Up</Tabs.Tab>
+              </Tabs.List>
+            </Tabs>
 
-        <Stack>
-          {type === 'signup' && (
+            <Stack>
+              {type === 'signup' && (
+                <TextInput
+                  label="Email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.currentTarget.value)}
+                />
+              )}
+              <TextInput
+                label="Username"
+                placeholder="yourusername"
+                value={username}
+                onChange={(e) => setUsername(e.currentTarget.value)}
+              />
+              <PasswordInput
+                label="Password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.currentTarget.value)}
+              />
+              <Button loading={loading} fullWidth onClick={handleAuth}>
+                {type === 'login' ? 'Login' : 'Sign Up'}
+              </Button>
+              {error && (
+                <Notification color="red" withCloseButton={false} withBorder={true}>
+                  {error}
+                </Notification>
+              )}
+            </Stack>
+          </>
+        )}
+        {step === 'confirm' && (
+          <Stack>
             <TextInput
-              label="Email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.currentTarget.value)}
+              label="Confirmation Code"
+              placeholder="Enter the code sent to your email"
+              value={confirmationCode}
+              onChange={(e) => setConfirmationCode(e.currentTarget.value)}
             />
-          )}
-          <TextInput
-            label="Username"
-            placeholder="yourusername"
-            value={username}
-            onChange={(e) => setUsername(e.currentTarget.value)}
-          />
-          <PasswordInput
-            label="Password"
-            placeholder="••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.currentTarget.value)}
-          />
-          <Button loading={loading} fullWidth onClick={handleAuth}>{type === 'login' ? 'Login' : 'Sign Up'}</Button>
-          {error && (
-            <Notification color="red" withCloseButton={false} withBorder={true}>
-              {error}
-            </Notification>
-          )}
-        </Stack>
+            <Button loading={loading} fullWidth onClick={handleConfirm}>
+              Confirm Account
+            </Button>
+            {error && (
+              <Notification color="red" withCloseButton={false} withBorder={true}>
+                {error}
+              </Notification>
+            )}
+          </Stack>
+        )}
+
       </Paper>
     </Container>
   );
