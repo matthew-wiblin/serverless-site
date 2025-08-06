@@ -36,7 +36,7 @@ export default function Login() {
     try {
       await confirmSignUp({ username, confirmationCode });
       await signIn({ username, password });
-      window.location.href = '/';
+      window.location.href = '/account';
     } catch (err) {
       setError(err.message || 'Confirmation failed');
     }
