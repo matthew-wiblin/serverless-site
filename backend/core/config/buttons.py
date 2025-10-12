@@ -1,4 +1,4 @@
-functions = {
+buttons = {
     'uploadphoto': {
         'title': 'Upload a Photo',
         'entity': 'photo',
