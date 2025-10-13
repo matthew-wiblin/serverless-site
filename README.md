@@ -13,6 +13,7 @@ Serverless Proj hosted on AWS
 ### To Run
 
  - chmod +x deployfrontend.sh (within frontend directory)
+ - chmod +x buildgolambdas.sh (within backend directory)
  - environment variable for frontend deploy stored in .env
 
 ### naming conventions

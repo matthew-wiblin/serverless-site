@@ -18,3 +18,9 @@ venv/
 
 # Serverless directories
 .serverless
+
+# Ignore go binaries anywhere
+**/bootstrap
+**/*.exe
+**/*.out
+**/*.zip

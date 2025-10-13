@@ -1,7 +1,7 @@
 # "org" ensures this Service is used with the correct Serverless Framework Access Key.
 org: mattheworganisation
 # "service" is the name of this project. This will also be added to your AWS resource names.
-service: PhotoAppBackend
+service: MyAppBackend
 
 provider:
   name: aws
@@ -19,10 +19,8 @@ provider:
             - 'dynamodb:DeleteItem'
           Resource: 
             - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-user-${sls:stage}
-            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-photo-${sls:stage}
   environment:
     DYNAMODB_TABLE_USER: ${self:service}-user-${sls:stage}
-    DYNAMODB_TABLE_PHOTO: ${self:service}-photo-${sls:stage}
 
 
 resources: #specify deletion policies at some point
@@ -38,21 +36,11 @@ resources: #specify deletion policies at some point
           - AttributeName: id
             KeyType: HASH
         TableName: ${self:service}-user-${sls:stage}
-    PhotoTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        BillingMode: PAY_PER_REQUEST
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        TableName: ${self:service}-photo-${sls:stage}
+
 
 functions:
   apihandler:
-    handler: core.handlers.apihandler.apihandler
+    handler: corepython.handlers.apihandler.apihandler
     events:
       - http:
           path: /api
@@ -63,7 +51,7 @@ functions:
           method: any
           cors: true
   viewhandler:
-    handler: core.handlers.viewhandler.viewhandler
+    handler: corepython.handlers.viewhandler.viewhandler
     events:
       - http:
           path: /view
@@ -73,6 +61,22 @@ functions:
           path: /view/{urlpath}
           method: any
           cors: true
+  
+  webhandler:
+    handler: bootstrap
+    runtime: provided.al2023
+    package:
+      artifact: corego/webhandler/bootstrap.zip
+    events:
+      - http:
+          path: /web
+          method: any
+          cors: true
+      - http:
+          path: /web/{urlpath}
+          method: any
+          cors: true
+
 
 plugins:
   - serverless-python-requirements
