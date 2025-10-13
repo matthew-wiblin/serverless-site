@@ -1,9 +1,9 @@
 import json
 
-from core.lib.awsfunctions import getauthenticateduser, geturllist
-from core.lib.dbfunctions import createitem
-from core.config.views import views
-from core.config.model import model
+from corepython.lib.awsfunctions import getauthenticateduser, geturllist
+from corepython.lib.dbfunctions import createitem
+from corepython.config.views import views
+from corepython.config.model import model
 
 def viewhandler(event, context):
     print('event = ', event)
