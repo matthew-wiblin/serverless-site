@@ -8,8 +8,9 @@ views = {
             {'type': 'columns', 'components': [
                 [
                     {'type': 'card', 'title': 'Overview of the site', 
-                        'description': ['This site is a simple photo uploader', 
-                            'You can sign up for an account and manage/store your photos']},
+                        'description': ['This site is a simple file storage manager', 
+                            'You can sign up for an account and manage/store your projects',
+                            'Complete with audit and other functionality']},
                     {'type': 'photo', 'where': 'frontend', 'location': 'spaniel-brown.png'}
                 ],
                 [
