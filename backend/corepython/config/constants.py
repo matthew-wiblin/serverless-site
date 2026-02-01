@@ -1,0 +1,1 @@
+JWKSURL = 'https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_j2ARZDsZL/.well-known/jwks.json'
