@@ -23,10 +23,12 @@ export default function View({ viewData }) {
   function renderComponent(component, index) {
     switch (component.type) {
       case 'card':
-        return <Card key={index}>
-         <Title key={`card-title-${index}`} order={3}>{component.title}</Title>
-         {component.description.map((line, i) => (<Text key={`card-description-${index}-${i}`}>{line}</Text>))}
-       </Card>
+        return (
+          <Card key={index}>
+            <Title key={`card-title-${index}`} order={3}>{component.title}</Title>
+            {component.description.map((line, i) => (<Text key={`card-description-${index}-${i}`}>{line}</Text>))}
+          </Card>
+        )
 
       case 'photo':
         if (component.where === 'frontend') return <Image key={index} src={`${component.location}`} h='auto' w={500}/>
@@ -34,19 +36,25 @@ export default function View({ viewData }) {
       case 'divider':
         return <Divider key={index}/>
 
-      case 'columns':
-        const span = 12 / component.components.length
-        return (<Grid key={index}> 
-          {component.components.map((colComponent, colIndex) => (
-            <Grid.Col key={`${index}-${colIndex}`} span={span}>
-              <Center style={{ flexDirection: 'column' }}>
-                {colComponent.map((subComponent, subIndex) => 
-                  renderComponent(subComponent, `${index}-${colIndex}-${subIndex}`)
-                )}
-              </Center>
-            </Grid.Col>
-          ))}
-        </Grid>);
+      case 'grid':
+        return component.components.map((row, rowIndex) => {
+          const span = 12 / row.length
+          return (
+            <Grid key={`${index}-row-${rowIndex}`}>
+              {row.map((col, colIndex) => (
+                <Grid.Col key={`${index}-${rowIndex}-${colIndex}`} span={span}>
+                  <Center style={{ flexDirection: 'column' }}>
+                    {col.map((child, childIndex) => renderComponent(child, `${index}-${rowIndex}-${colIndex}-${childIndex}`))}
+                  </Center>
+                </Grid.Col>
+              ))}
+            </Grid>
+          )
+        })
+      
+      default:
+        return null
+      
     }
   }
 
