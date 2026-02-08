@@ -30,9 +30,9 @@ class Event:
             if decodedpayload['token_use'] == 'access':
                 return True, decodedpayload['username']
             else:
-                return False, 'error - Wrong token passed to backend'
+                return False, None
         except Exception as e:
-            return False, f"error - {str(e)}"
+            return False, None
 
     def _geturllist(self):
         path = self.event.get("path") or {}
