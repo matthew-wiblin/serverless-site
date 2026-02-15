@@ -3,10 +3,15 @@ import boto3
 import uuid
 
 
-def dbconnect():
-    dynamodb = boto3.resource("dynamodb")
-    tablename = 'DYNAMODB_TABLE'
-    table = dynamodb.Table(os.environ[f"{tablename}"])
+def dbconnect(): # add proper stage and local dev db handling later
+    try:
+        dynamodb = boto3.resource("dynamodb")
+        tablename = 'DYNAMODB_TABLE'
+        table = dynamodb.Table(os.environ[f"{tablename}"])
+    except:
+        dynamodb = boto3.resource("dynamodb")
+        tablename = 'DYNAMODB_TABLE'
+        table = dynamodb.Table("MyAppBackend-Table-dev")
     return table
 
 table = dbconnect()
