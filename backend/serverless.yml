@@ -71,12 +71,8 @@ functions:
     handler: corepython.handlers.viewhandler.viewhandler
     events:
       - http:
-          path: /view
-          method: any
-          cors: true
-      - http:
           path: /view/{urlpath}
-          method: any
+          method: get
           cors: true
   
   webhandler:
