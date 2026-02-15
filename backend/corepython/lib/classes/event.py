@@ -4,11 +4,14 @@ from jose import jwk, jwt
 from corepython.config.constants import JWKSURL
 
 class Event:
+    "Handles lambda event from API gateway request"
+
     def __init__(self, event):
         self.event = event
         self.isloggedin, self.username = self._getauthenticateduser()
         self.urllist = self._geturllist()
-
+        print('Event = ', event)
+    
     def _getauthenticateduser(self):
         try:
             token = self.event['headers']['Authorization']
